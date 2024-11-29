@@ -1,54 +1,71 @@
-import openai
 import logging
+from transformers import pipeline
 from src.config import CONFIG
 
 logger = logging.getLogger(__name__)
 
 class AIHandler:
     def __init__(self):
-        self.api_key = CONFIG.get("openai_api_key")
-        if not self.api_key:
-            logger.error("OpenAI API key is missing in CONFIG.")
-            raise ValueError("OpenAI API key is required for AIHandler.")
-
-        self.model = CONFIG.get("ai_handler_model", "text-davinci-003")
-        self.max_tokens = CONFIG.get("ai_handler_max_tokens", 100)
-        self.temperature = CONFIG.get("ai_handler_temperature", 0.7)
-
-        # Set the API key for OpenAI
-        openai.api_key = self.api_key
+        # Load model and pipeline from config
+        self.model_name = CONFIG.get("ai_handler_model")
+        self.max_tokens = CONFIG.get("ai_handler_max_tokens")
+        self.temperature = CONFIG.get("ai_handler_temperature")
+        self.enable_ai = CONFIG.get("enable_ai_handler)
+        
+        if self.enable_ai:
+            try:
+                self.pipeline = pipeline("text-generation", model=self.model_name)
+                logger.info(f"AI model '{self.model_name}' loaded successfully.")
+            except Exception as e:
+                logger.error(f"Failed to load model '{self.model_name}': {e}")
+                self.pipeline = None
+        else:
+            logger.warning("AI Handler is disabled in the configuration.")
+            self.pipeline = None
 
     def select_sheet(self, sheet_names):
         """
-        Select the appropriate sheet by querying the AI with the list of sheet names.
-
-        Args:
-            sheet_names (list): List of sheet names from the Excel file.
-
-        Returns:
-            str: The name of the selected sheet.
+        Select the most relevant sheet from a list of sheet names.
         """
-        if not sheet_names:
-            logger.error("Sheet names list is empty. Cannot proceed.")
+        if not self.enable_ai or not self.pipeline:
+            logger.warning("AI Handler is disabled or not properly initialized.")
             return None
 
         prompt = f"Given the following sheet names: {sheet_names}, which sheet contains the relevant data for processing?"
         try:
-            response = openai.Completion.create(
-                engine=self.model,
-                prompt=prompt,
-                max_tokens=self.max_tokens,
-                temperature=self.temperature,
-            )
-            selected_sheet = response.choices[0].text.strip()
-            logger.info(f"AI selected sheet: {selected_sheet}")
+            response = self.pipeline(prompt, max_length=self.max_tokens, num_return_sequences=1, temperature=self.temperature)
+            selected_sheet = response[0]["generated_text"].strip()
+            logger.info(f"Selected sheet: {selected_sheet}")
             return selected_sheet
         except Exception as e:
-            logger.error(f"Error querying AI: {e}")
+            logger.error(f"Error selecting sheet with AI model: {e}")
             return None
 
-    def fill_additional_info(self, chunk_data):
+    def fill_additional_info(self, chunk):
         """
-        Placeholder for AI-based logic to fill additional info in chunks.
+        Enrich a chunk of data using the AI model.
         """
-        pass
+        if not self.enable_ai or not self.pipeline:
+            logger.warning("AI Handler is disabled or not properly initialized.")
+            return chunk
+
+        prompt_template = (
+            "Enrich the following data chunk by adding missing information. "
+            "Chunk:\n{chunk_data}"
+        )
+
+        try:
+            for index, row in chunk.iterrows():
+                chunk_data = row.to_dict()
+                prompt = prompt_template.format(chunk_data=chunk_data)
+                response = self.pipeline(prompt, max_length=self.max_tokens, num_return_sequences=1, temperature=self.temperature)
+                enriched_data = response[0]["generated_text"].strip()
+
+                # Example of enrichment (modify as needed):
+                row["AI_Enriched_Info"] = enriched_data
+                logger.info(f"Processed row {index}: {enriched_data}")
+
+        except Exception as e:
+            logger.error(f"Error enriching chunk with AI model: {e}")
+
+        return chunk

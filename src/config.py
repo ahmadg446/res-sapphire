@@ -38,9 +38,9 @@ CONFIG = {
     "save_intermediate": True,  # Save intermediate results for debugging
 
     # AI handler settings
-    "openai_api_key": os.getenv("OPENAI_API_KEY"),  # API key for OpenAI
+    "ai_handler_model": "res-sapphire-01", 
+    "ai_handler_max_tokens": 100,  # Adjust token limits as needed
     "enable_ai_handler": True,  # Toggle AI handler usage
-    "ai_handler_model": "text-davinci-003",  # Default OpenAI model to use
     "ai_handler_max_tokens": 100,  # Maximum tokens to use in each completion
     "ai_handler_temperature": 0.7,  # Sampling temperature for OpenAI completions
     
