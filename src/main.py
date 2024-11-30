@@ -1,8 +1,8 @@
 import sys
 import logging
 import os
-from src.config import CONFIG
-from src.modules.filemanager import FileManager
+from config import CONFIG
+from modules.filemanager import FileManager
 
 
 def setup_logging():
