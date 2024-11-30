@@ -55,31 +55,29 @@ class WebScraper:
             'images': images
         }
 
-    def scrape_and_update_row(self, sku, chunk_data, index):
-        """
-        Scrapes the product details for the given SKU and updates the row in the chunk_data.
-        """
-        base_url = CONFIG["scraper_base_url"].format(sku=sku)
-        headers = CONFIG["custom_headers"]
-        response = self.make_request(base_url, headers)
+  #  def scrape_and_update_row(self, sku, chunk_data, index):
+  #      base_url = CONFIG["scraper_base_url"].format(sku=sku)
+   #     headers = CONFIG["custom_headers"]
+    #    response = self.make_request(base_url, headers)
 
-        if not response:
-            logger.warning(f"Skipping SKU {sku} due to request failure.")
-            return
+#        if not response:
+ #           logger.warning(f"Skipping SKU {sku} due to request failure.")
+  #          return
 
-        product_details = self.scrape_product_details(response.text)
+   #     product_details = self.scrape_product_details(response.text)
 
         # Update the DataFrame with scraped details
-        chunk_data.at[index, "PRODUCT TITLE"] = product_details['product_name']
-        chunk_data.at[index, "SKU"] = product_details['sku']
-        chunk_data.at[index, "COLOR"] = ', '.join(product_details['colors'])
-        chunk_data.at[index, "SIZE"] = ', '.join(product_details['sizes'])
+    #    chunk_data.at[index, "PRODUCT TITLE"] = product_details['product_name']
+     #   chunk_data.at[index, "SKU"] = product_details['sku']
+      #  chunk_data.at[index, "COLOR"] = ', '.join(product_details['colors'])
+       # chunk_data.at[index, "SIZE"] = ', '.join(product_details['sizes'])
 
         # Assign image URLs
-        for i, col_index in enumerate(["IMAGE URL 1", "IMAGE URL 2", "IMAGE URL 3"], start=1):
-            chunk_data.at[index, col_index] = product_details['images'][i - 1] if len(product_details['images']) >= i else 'N/A'
+        #for i, col_index in enumerate(["IMAGE URL 1", "IMAGE URL 2", "IMAGE URL 3"], start=1):
+         #   chunk_data.at[index, col_index] = product_details['images'][i - 1] if len(product_details['images']) >= i else 'N/A'
 
-        logger.info(f"Updated SKU {sku} with product details.")
+        #logger.info(f"Updated SKU {sku} with product details.")
+
 
     def make_request(self, url, headers):
         """
