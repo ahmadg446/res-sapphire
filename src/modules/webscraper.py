@@ -80,9 +80,6 @@ class WebScraper:
 
 
     def make_request(self, url, headers):
-        """
-        Makes a request to the given URL with retries and delay logic.
-        """
         retries = CONFIG["max_retries"]
         delay = CONFIG["rate_limit_delay"]
         timeout = CONFIG["timeout"]

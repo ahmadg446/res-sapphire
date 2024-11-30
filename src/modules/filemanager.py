@@ -35,17 +35,13 @@ class FileManager:
             chunk_number += 1
 
     def validate_and_prepare_directories(self):
-        """
-        Ensure the split_chunks and processed directories are prepared, and clear only files.
-        """
         os.makedirs(self.split_chunks_dir, exist_ok=True)
         os.makedirs(self.processed_dir, exist_ok=True)
-
-        # Clear only files, not directories
         for file in os.listdir(self.split_chunks_dir):
             file_path = os.path.join(self.split_chunks_dir, file)
             if os.path.isfile(file_path):
                 os.remove(file_path)
+
 
     def extract_headers(self, file_path):
         try:

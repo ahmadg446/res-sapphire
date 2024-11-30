@@ -23,3 +23,5 @@ id_rsa
 id_rsa.pub
 
 sapphire.code-workspace
+
+.devcontainer/
