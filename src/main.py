@@ -39,7 +39,7 @@ class Main:
         self.assets_dir = os.path.dirname(CONFIG["input_file_path"])
         self.chunk_size = CONFIG["chunk_size"]
         self.file_manager = FileManager(self.assets_dir, self.chunk_size)
-        self.web_scraper = WebScraper()
+        self.web_scraper = WebScraper(self.file_manager)
 
     def orchestrate(self):
         logger.info("Starting directory processing...")
@@ -53,9 +53,23 @@ class Main:
         else:
             logger.info("Web scraping set to run automatically.")
 
-        logger.info("Proceeding with web scraping...")
+        logger.info("Analyzing the reference file before scraping...")
+        reference_columns = self.file_manager.analyze_reference_columns()
+        if reference_columns:
+            logger.debug(f"Reference columns identified: {reference_columns}")
+
+        # Process files into chunks
+        self.file_manager.process()
+
+        # Load split chunks
         chunks = self.file_manager.load_split_chunks()
-        self.web_scraper.process_chunks(chunks)
+
+        # Process chunks using the WebScraper
+        logger.info("Analyzing and updating reference data...")
+        self.web_scraper.update_reference_data()
+
+        logger.info("All processes completed.")
+
 
 if __name__ == "__main__":
     main = Main()

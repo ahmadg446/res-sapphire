@@ -33,7 +33,7 @@ CONFIG = {
     "chunk_size": 10,
     "log_level": "INFO",
 
-    # Debugging and logging
+    # Debugging and logging (Terminal output restricted, detailed logs in process_log)
     "log_level": "INFO",  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
     "save_intermediate": True,  # Save intermediate results for debugging
 
