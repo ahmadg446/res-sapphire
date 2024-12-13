@@ -1,5 +1,4 @@
 import os
-
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 CONFIG = {
@@ -37,7 +36,7 @@ CONFIG = {
     "log_level": "INFO",  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
     "save_intermediate": True,  # Save intermediate results for debugging
 
-    # AI handler settings
+    # AI handler configuration
     "ai_handler_model": "res-sapphire-01", 
     "ai_handler_max_tokens": 100,  # Adjust token limits as needed
     "enable_ai_handler": True,  # Toggle AI handler usage

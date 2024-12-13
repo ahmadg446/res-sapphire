@@ -10,7 +10,7 @@ class AIHandler:
         self.model_name = CONFIG.get("ai_handler_model")
         self.max_tokens = CONFIG.get("ai_handler_max_tokens")
         self.temperature = CONFIG.get("ai_handler_temperature")
-        self.enable_ai = CONFIG.get("enable_ai_handler)
+        self.enable_ai = CONFIG.get("enable_ai_handler")
         
         if self.enable_ai:
             try:

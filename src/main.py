@@ -1,21 +1,23 @@
 import sys
 import logging
 import os
-from config import CONFIG
-from modules.filemanager import FileManager
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src.config import CONFIG
+from src.modules.filemanager import FileManager
+from src.modules.webscraper import WebScraper
 
 
 def setup_logging():
-    # Configures logging to terminal and file
     log_level_terminal = logging.INFO
     log_level_file = logging.DEBUG
 
-    log_file = CONFIG.get("log_file")
+    log_file = CONFIG["log_file"]
     if log_file:
         logs_dir = os.path.dirname(log_file)
         os.makedirs(logs_dir, exist_ok=True)
+
         with open(log_file, 'w'):
-            pass  # Clear log file at the start
+            pass
 
     terminal_handler = logging.StreamHandler()
     terminal_handler.setLevel(log_level_terminal)
@@ -29,42 +31,32 @@ def setup_logging():
 
     logging.basicConfig(level=logging.DEBUG, handlers=[terminal_handler, file_handler])
 
+setup_logging()
+logger = logging.getLogger(__name__)
 
-def initialize_components():
-    # Sets up and returns the file manager
-    assets_dir = os.path.dirname(CONFIG["input_file_path"])
-    chunk_size = CONFIG["chunk_size"]
-    return FileManager(assets_dir, chunk_size)
+class Main:
+    def __init__(self):
+        self.assets_dir = os.path.dirname(CONFIG["input_file_path"])
+        self.chunk_size = CONFIG["chunk_size"]
+        self.file_manager = FileManager(self.assets_dir, self.chunk_size)
+        self.web_scraper = WebScraper()
 
+    def orchestrate(self):
+        logger.info("Starting directory processing...")
+        self.file_manager.process()
 
-def main():
-    setup_logging()
-    logger = logging.getLogger(__name__)
-    logger.info("Application starting...")
+        if CONFIG["require_confirmation"]:
+            proceed = input("Do you want to continue with web scraping? (Y/N): ").strip().lower()
+            if proceed != "y":
+                logger.info("Skipping web scraping. Exiting.")
+                return
+        else:
+            logger.info("Web scraping set to run automatically.")
 
-    file_manager = initialize_components()
-
-    logger.info("Starting directory processing...")
-    file_manager.process()
-
-    if CONFIG["require_confirmation"]:
-        proceed = input("Do you want to continue with the next steps? (Y/N): ").strip().lower()
-        if proceed != "y":
-            logger.info("Exiting.")
-            return
-    else:
-        logger.info("Continuing automatically.")
-
-    logger.info("Analyzing the reference file...")
-    reference_columns = file_manager.analyze_reference_columns()
-    if reference_columns:
-        logger.debug(f"Reference columns identified: {reference_columns}")
-
-    chunks = file_manager.load_split_chunks()
-    logger.info(f"Loaded {len(chunks)} chunks for further processing.")
-
-    logger.info("Application completed successfully.")
-
+        logger.info("Proceeding with web scraping...")
+        chunks = self.file_manager.load_split_chunks()
+        self.web_scraper.process_chunks(chunks)
 
 if __name__ == "__main__":
-    main()
+    main = Main()
+    main.orchestrate()
