@@ -33,6 +33,7 @@ class FileManager:
         total_chunks = (len(reference_data) + self.chunk_size -1) // self.chunk_size
         saved_chunk_files = []
         
+        
         for chunk_number, start_row in enumerate(range(0, len(reference_data), self.chunk_size), start = 1):
             chunk = reference_data.iloc[start_row:start_row + self.chunk_size]
             chunk_file = self.generate_chunk_filename(chunk_number)
@@ -40,25 +41,15 @@ class FileManager:
             saved_chunk_files.append(chunk_file)
             logger.debug(f"Saved chunk {chunk_number}: to {chunk.shape[0]} rows to {chunk_file}")
 
-        with ThreadPoolExecutor() as executor:
-            futures = {executor.submit(self.extract_headers, file_path): file_path for file_path in saved_chunk_files}
+        extracted_headers = {}
+        if saved_chunk_files:
+            first_chunk = saved_chunk_files[0]
+            extracted_headers = self.extract_headers(first_chunk)
+            if extracted_headers:  
 
-        extracted_data = {}
-        for future in futures:
-            file_path = futures[future]
-
-            try:
-                headers = future.result()
-                if headers:
-                    extracted_data[file_path] = headers
-                    logger.debug(f"Extracted headers for {file_path}")
-
-            except Exception as e:
-                logger.error(f"Failed to extract headers for {file_path}: {e}")
-        
-        logger.debug(f"File processing completed.")
-        return extracted_data
-    
+                logger.debug("File processing completed.")
+                return extracted_headers
+            
     def load_excel(self, file_path): # load excel file, select sheet w most rows
 
         try:
@@ -85,22 +76,18 @@ class FileManager:
 
             title_row_index = 0
 
+            logger.debug(f"Columns identified: {df.iloc[title_row_index].tolist()}")
+
             for col_index in range(df.shape[1]):
                 title = df.iloc[title_row_index, col_index]
 
                 if pd.isna(title or title == ""):
-                    break
+                    continue
 
                 title = str(title).strip()
                 column_data = df.iloc[title_row_index + 1:, col_index].dropna().tolist()
 
                 headers[title] = column_data
-
-                logger.debug(f"Extracted headers: {list(headers.keys())}")
-                for title, data in headers.items():
-                    logger.debug(f"() Title: {title} || Rows: {len(data)} ()")
-
-                return headers
             
         except Exception as e:
             logger.error(f"Failed to extract headers from {file_path}: {e}")

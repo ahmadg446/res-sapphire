@@ -1,37 +1,13 @@
-2024-12-16 22:53:18,121 - INFO - Starting directory processing...
-2024-12-16 22:53:18,122 - DEBUG - Starting file processing...
-2024-12-16 22:53:18,212 - DEBUG - Loaded reference data: 75 rows, 18 columns.
-2024-12-16 22:53:18,224 - DEBUG - Saved chunk 1: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk1.xlsx
-2024-12-16 22:53:18,232 - DEBUG - Saved chunk 2: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk2.xlsx
-2024-12-16 22:53:18,240 - DEBUG - Saved chunk 3: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk3.xlsx
-2024-12-16 22:53:18,250 - DEBUG - Saved chunk 4: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk4.xlsx
-2024-12-16 22:53:18,258 - DEBUG - Saved chunk 5: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk5.xlsx
-2024-12-16 22:53:18,266 - DEBUG - Saved chunk 6: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk6.xlsx
-2024-12-16 22:53:18,274 - DEBUG - Saved chunk 7: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk7.xlsx
-2024-12-16 22:53:18,281 - DEBUG - Saved chunk 8: to 5 rows to /workspaces/res-sapphire/assets/split_chunks/chunk8.xlsx
-2024-12-16 22:53:18,307 - DEBUG - Extracted headers: ['SKU']
-2024-12-16 22:53:18,311 - DEBUG - () Title: SKU || Rows: 10 ()
-2024-12-16 22:53:18,314 - DEBUG - Extracted headers: ['SKU']
-2024-12-16 22:53:18,317 - DEBUG - Extracted headers: ['SKU']
-2024-12-16 22:53:18,321 - DEBUG - () Title: SKU || Rows: 10 ()
-2024-12-16 22:53:18,328 - DEBUG - Extracted headers: ['SKU']
-2024-12-16 22:53:18,329 - DEBUG - () Title: SKU || Rows: 10 ()
-2024-12-16 22:53:18,336 - DEBUG - Extracted headers: ['SKU']
-2024-12-16 22:53:18,339 - DEBUG - Extracted headers: ['SKU']
-2024-12-16 22:53:18,340 - DEBUG - () Title: SKU || Rows: 10 ()
-2024-12-16 22:53:18,343 - DEBUG - Extracted headers: ['SKU']
-2024-12-16 22:53:18,344 - DEBUG - () Title: SKU || Rows: 10 ()
-2024-12-16 22:53:18,345 - DEBUG - () Title: SKU || Rows: 10 ()
-2024-12-16 22:53:18,347 - DEBUG - Extracted headers: ['SKU']
-2024-12-16 22:53:18,348 - DEBUG - () Title: SKU || Rows: 10 ()
-2024-12-16 22:53:18,348 - DEBUG - () Title: SKU || Rows: 5 ()
-2024-12-16 22:53:18,348 - DEBUG - Extracted headers for /workspaces/res-sapphire/assets/split_chunks/chunk1.xlsx
-2024-12-16 22:53:18,348 - DEBUG - Extracted headers for /workspaces/res-sapphire/assets/split_chunks/chunk2.xlsx
-2024-12-16 22:53:18,348 - DEBUG - Extracted headers for /workspaces/res-sapphire/assets/split_chunks/chunk3.xlsx
-2024-12-16 22:53:18,348 - DEBUG - Extracted headers for /workspaces/res-sapphire/assets/split_chunks/chunk4.xlsx
-2024-12-16 22:53:18,348 - DEBUG - Extracted headers for /workspaces/res-sapphire/assets/split_chunks/chunk5.xlsx
-2024-12-16 22:53:18,349 - DEBUG - Extracted headers for /workspaces/res-sapphire/assets/split_chunks/chunk6.xlsx
-2024-12-16 22:53:18,349 - DEBUG - Extracted headers for /workspaces/res-sapphire/assets/split_chunks/chunk7.xlsx
-2024-12-16 22:53:18,349 - DEBUG - Extracted headers for /workspaces/res-sapphire/assets/split_chunks/chunk8.xlsx
-2024-12-16 22:53:18,349 - DEBUG - File processing completed.
-2024-12-16 22:53:34,459 - INFO - Skipping web scraping. Exiting.
+2024-12-16 23:12:59,722 - INFO - Starting directory processing...
+2024-12-16 23:12:59,723 - DEBUG - Starting file processing...
+2024-12-16 23:12:59,815 - DEBUG - Loaded reference data: 75 rows, 18 columns.
+2024-12-16 23:12:59,826 - DEBUG - Saved chunk 1: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk1.xlsx
+2024-12-16 23:12:59,835 - DEBUG - Saved chunk 2: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk2.xlsx
+2024-12-16 23:12:59,843 - DEBUG - Saved chunk 3: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk3.xlsx
+2024-12-16 23:12:59,852 - DEBUG - Saved chunk 4: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk4.xlsx
+2024-12-16 23:12:59,861 - DEBUG - Saved chunk 5: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk5.xlsx
+2024-12-16 23:12:59,869 - DEBUG - Saved chunk 6: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk6.xlsx
+2024-12-16 23:12:59,877 - DEBUG - Saved chunk 7: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk7.xlsx
+2024-12-16 23:12:59,885 - DEBUG - Saved chunk 8: to 5 rows to /workspaces/res-sapphire/assets/split_chunks/chunk8.xlsx
+2024-12-16 23:12:59,892 - DEBUG - Columns identified: ['SKU', 'PRODUCT ID', 'INV QTY', 'PRICE', 'WEIGHT (GRAM)', 'PRODUCT TITLE', 'PRODUCT DESCRIPTION', 'IMAGE URL 1', 'IMAGE URL 2', 'IMAGE URL 3', 'IMAGE URL 4', 'COLOR', 'SIZE', 'SCRATCH 1', 'SCRATCH 2', 'SCRATCH 3', 'SCRATCH 4', 'SCRATCH 5']
+2024-12-16 23:13:13,059 - INFO - Skipping web scraping. Exiting.
