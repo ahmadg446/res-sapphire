@@ -76,7 +76,7 @@ class FileManager:
 
             title_row_index = 0
 
-            logger.debug(f"Columns identified: {df.iloc[title_row_index].tolist()}")
+            identified_columns = []
 
             for col_index in range(df.shape[1]):
                 title = df.iloc[title_row_index, col_index]
@@ -85,9 +85,14 @@ class FileManager:
                     continue
 
                 title = str(title).strip()
+                identified_columns.append(f"'{title}' ({col_index + 1})")
                 column_data = df.iloc[title_row_index + 1:, col_index].dropna().tolist()
 
                 headers[title] = column_data
+
+            logger.debug(f"Columns identified: {', '.join(identified_columns)}")
+
+            return headers
             
         except Exception as e:
             logger.error(f"Failed to extract headers from {file_path}: {e}")
