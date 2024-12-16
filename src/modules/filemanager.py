@@ -37,6 +37,7 @@ class FileManager:
             chunk = reference_data.iloc[start_row:start_row + self.chunk_size]
             chunk_file = self.generate_chunk_filename(chunk_number)
             chunk.to_excel(chunk_file, index = False)
+            saved_chunk_files.append(chunk_file)
             logger.debug(f"Saved chunk {chunk_number}: to {chunk.shape[0]} rows to {chunk_file}")
 
         with ThreadPoolExecutor() as executor:
@@ -78,22 +79,26 @@ class FileManager:
     def extract_headers(self, file_path):
 
         try:
-            df = pd.read_excel(file_path)
+            df = pd.read_excel(file_path, header = None)
 
             headers = {}
 
-            for col_index, title in enumerate(df.iloc[0]):
-                if pd.isna(title):
+            title_row_index = 0
+
+            for col_index in range(df.shape[1]):
+                title = df.iloc[title_row_index, col_index]
+
+                if pd.isna(title or title == ""):
                     break
 
-                title = str(title),strip()
-                column_data = df.iloc[1:, col_index].dropna().tolist()
+                title = str(title).strip()
+                column_data = df.iloc[title_row_index + 1:, col_index].dropna().tolist()
 
                 headers[title] = column_data
 
                 logger.debug(f"Extracted headers: {list(headers.keys())}")
                 for title, data in headers.items():
-                    logger.debug(f"   () Title: {title} () Rows: {len(data)}")
+                    logger.debug(f"() Title: {title} || Rows: {len(data)} ()")
 
                 return headers
             
