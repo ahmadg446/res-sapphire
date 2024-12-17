@@ -20,7 +20,7 @@ class FileManager:
         self.processed_dir = CONFIG["processed_directory"]
 
     def process(self):
-        logger.debug("Starting file processing...")
+        logger.debug("Processing reference data...")
         self.validate_and_prepare_directories() # ensure directories ready and cleared
 
         try:
@@ -45,10 +45,16 @@ class FileManager:
         if saved_chunk_files:
             first_chunk = saved_chunk_files[0]
             extracted_headers = self.extract_headers(first_chunk)
+
             if extracted_headers:  
 
-                logger.debug("File processing completed.")
-                return extracted_headers
+                logger.debug("Reference data processing completed.")
+
+                update_sheet_headers = self.process_update_sheet()
+                if update_sheet_headers:
+                    logger.debug(f"Headers extracted from update sheet: {list(update_sheet_headers.keys())}")
+                
+                return extracted_headers, update_sheet_headers
             
     def load_excel(self, file_path): # load excel file, select sheet w most rows
 
@@ -100,28 +106,36 @@ class FileManager:
 
             
     def process_update_sheet(self):
-        update_file_path = CONFIG.get("update_template_path")
-        if not update_file_path:
-            logger.error("Update template path is not configured in CONFIG.")
-            return None
+        try: 
+            update_sheet_path = CONFIG.get("update_template_path")
+            if not update_sheet_path:
+                logger.error("Update sheet path not configured.")
+                return None
+            
+            logger.debug("Loading update sheet.")
+            df = pd.read_excel(update_sheet_path, header = None)
 
-        logger.debug(f"Processing update sheet: {update_file_path}")
+            headers = {}
+            title_row_index = 0
 
-        try:
-            update_data = pd.read_excel(update_file_path)
-            logger.debug(f"Loaded update sheet: {update_data.shape[0]} rows, {update_data.shape[1]} columns.")
+            for col_index in range(df.shape[1]):
+                title = df.iloc[title_row_index, col_index]
+
+                if pd.isna(title) or title == "":
+                    continue
+
+                title = str(title).strip()
+                column_data = df.iloc[title_row_index + 1:, col_index].dropna().tolist()
+                headers[title] = column_data
+
+            logger.debug(f"Update Sheet Columns identified: {', '.join([f'{title} ({col_index + 1})' for col_index, title, in enumerate(headers.keys())])}")
+
+            return headers
+        
         except Exception as e:
-            logger.error(f"Failed to load update sheet: {e}")
+            logger.error(f"Failed to process the update sheet: {e}")
             return None
-
-        # Extract headers and subcategories
-        headers = self.extract_headers(update_file_path)
-        if headers:
-            for main_category, subcategories in headers.items():
-                logger.debug(f"Main Category: {main_category}, Subcategories: {subcategories}")
-
-        return update_data
-
+        
     def load_split_chunks(self):
         chunks = []
         for file in glob.glob(os.path.join(self.split_chunks_dir, "*.xlsx")):
@@ -130,7 +144,7 @@ class FileManager:
     
     def process_chunk(self, chunk, chunk_number): # default chunk processing
         try:
-            # process_chunk_api(chunk, chunk_number)
+            # process_chunk_api(chunk, chunk_number) [uncomment to send info to api right away]
 
             chunk_file = self.generate_chunk_filename(chunk_number)
             chunk.to_excel(chunk_file, index = False)

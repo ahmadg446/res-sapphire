@@ -1,6 +1,7 @@
 import logging
 from transformers import pipeline
 from src.config import CONFIG
+from modules.filemanager import FileManager
 
 logger = logging.getLogger(__name__)
 
@@ -23,49 +24,17 @@ class AIHandler:
             logger.warning("AI Handler is disabled in the configuration.")
             self.pipeline = None
 
-    def select_sheet(self, sheet_names):
-        """
-        Select the most relevant sheet from a list of sheet names.
-        """
-        if not self.enable_ai or not self.pipeline:
-            logger.warning("AI Handler is disabled or not properly initialized.")
-            return None
 
-        prompt = f"Given the following sheet names: {sheet_names}, which sheet contains the relevant data for processing?"
-        try:
-            response = self.pipeline(prompt, max_length=self.max_tokens, num_return_sequences=1, temperature=self.temperature)
-            selected_sheet = response[0]["generated_text"].strip()
-            logger.info(f"Selected sheet: {selected_sheet}")
-            return selected_sheet
-        except Exception as e:
-            logger.error(f"Error selecting sheet with AI model: {e}")
-            return None
+    def api_payload(headers):
 
-    def fill_additional_info(self, chunk):
-        """
-        Enrich a chunk of data using the AI model.
-        """
-        if not self.enable_ai or not self.pipeline:
-            logger.warning("AI Handler is disabled or not properly initialized.")
-            return chunk
+        assets_dir = CONFIG.get("input_file_path")
+        chunk_size = CONFIG.get("chunk_size")
 
-        prompt_template = (
-            "Enrich the following data chunk by adding missing information. "
-            "Chunk:\n{chunk_data}"
-        )
+        file_manager = FileManager(assets_dir, chunk_size)
 
-        try:
-            for index, row in chunk.iterrows():
-                chunk_data = row.to_dict()
-                prompt = prompt_template.format(chunk_data=chunk_data)
-                response = self.pipeline(prompt, max_length=self.max_tokens, num_return_sequences=1, temperature=self.temperature)
-                enriched_data = response[0]["generated_text"].strip()
-
-                # Example of enrichment (modify as needed):
-                row["AI_Enriched_Info"] = enriched_data
-                logger.info(f"Processed row {index}: {enriched_data}")
-
-        except Exception as e:
-            logger.error(f"Error enriching chunk with AI model: {e}")
-
-        return chunk
+        headers = file_manager.process()
+        if not headers:
+            print("Failed to extract headers.")
+            return
+        
+        

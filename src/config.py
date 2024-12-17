@@ -37,7 +37,7 @@ CONFIG = {
     "save_intermediate": True,  # Save intermediate results for debugging
 
     # AI handler configuration
-    "ai_handler_model": "res-sapphire-01", 
+    "ai_handler_model": "gpt-4o-mini", 
     "ai_handler_max_tokens": 100,  # Adjust token limits as needed
     "enable_ai_handler": True,  # Toggle AI handler usage
     "ai_handler_max_tokens": 100,  # Maximum tokens to use in each completion
