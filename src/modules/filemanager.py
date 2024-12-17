@@ -20,7 +20,7 @@ class FileManager:
         self.processed_dir = CONFIG["processed_directory"]
 
     def process(self):
-        logger.debug("Processing reference data...")
+        logger.info("Processing reference data...")
         self.validate_and_prepare_directories() # ensure directories ready and cleared
 
         try:
@@ -52,9 +52,9 @@ class FileManager:
 
                 update_sheet_headers = self.process_update_sheet()
                 if update_sheet_headers:
-                    logger.debug(f"Headers extracted from update sheet: {list(update_sheet_headers.keys())}")
-                
-                return extracted_headers, update_sheet_headers
+                    
+                    return update_sheet_headers
+            return extracted_headers
             
     def load_excel(self, file_path): # load excel file, select sheet w most rows
 
@@ -110,10 +110,14 @@ class FileManager:
             update_sheet_path = CONFIG.get("update_template_path")
             if not update_sheet_path:
                 logger.error("Update sheet path not configured.")
-                return None
+                return None, None
             
-            logger.debug("Loading update sheet.")
-            df = pd.read_excel(update_sheet_path, header = None)
+            workbook = pd.ExcelFile(update_sheet_path)
+            sheet_names = workbook.sheet_names
+            logger.debug(f"Sheets available in Update Template: {', '.join(sheet_names)}")
+            
+            # logger.debug(f"Loading sheet: {sheet_names[0]}") [i dont wanna deal with this rn]
+            df = pd.read_excel(update_sheet_path, sheet_names[0], header = None)
 
             headers = {}
             title_row_index = 0
@@ -128,7 +132,7 @@ class FileManager:
                 column_data = df.iloc[title_row_index + 1:, col_index].dropna().tolist()
                 headers[title] = column_data
 
-            logger.debug(f"Update Sheet Columns identified: {', '.join([f'{title} ({col_index + 1})' for col_index, title, in enumerate(headers.keys())])}")
+            logger.debug(f"Update Sheet Columns identified: {', '.join([f"'{title}' ({col_index + 1})" for col_index, title, in enumerate(headers.keys())])}")
 
             return headers
         

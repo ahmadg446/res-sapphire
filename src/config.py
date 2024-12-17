@@ -34,13 +34,13 @@ CONFIG = {
 
     # Debugging and logging (Terminal output restricted, detailed logs in process_log)
     "log_level": "INFO",  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
-    "save_intermediate": True,  # Save intermediate results for debugging
+    "save_intermediate": True, 
 
     # AI handler configuration
     "ai_handler_model": "gpt-4o-mini", 
-    "ai_handler_max_tokens": 100,  # Adjust token limits as needed
-    "enable_ai_handler": True,  # Toggle AI handler usage
-    "ai_handler_max_tokens": 100,  # Maximum tokens to use in each completion
-    "ai_handler_temperature": 0.7,  # Sampling temperature for OpenAI completions
+    "api_key": "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",
+    "ai_handler_max_tokens": 1000,  # Adjust token limits as needed
+    "enable_ai_handler": True,
+    "ai_handler_temperature": 0.7,  
     
 }
