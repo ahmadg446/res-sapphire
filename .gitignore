@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 *.pyo
 
+API_KEY.env
 
 # Environment files
 .env

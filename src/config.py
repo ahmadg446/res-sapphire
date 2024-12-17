@@ -1,5 +1,8 @@
 import os
+from dotenv import load_dotenv
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+load_dotenv()
 
 CONFIG = {
 
@@ -38,7 +41,7 @@ CONFIG = {
 
     # AI handler configuration
     "ai_handler_model": "gpt-4o-mini", 
-    "api_key": "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",
+    "api_key": os.getenv("OPENAI_API_KEY"),
     "ai_handler_max_tokens": 1000,  # Adjust token limits as needed
     "enable_ai_handler": True,
     "ai_handler_temperature": 0.7,  
