@@ -18,6 +18,7 @@ class FileManager:
         self.ref_file = CONFIG["input_file_path"]
         self.split_chunks_dir = CONFIG["output_directory"]
         self.processed_dir = CONFIG["processed_directory"]
+        self.sku_dict = {}
 
     def process(self):
         logger.info("Processing reference data...")
@@ -46,9 +47,15 @@ class FileManager:
             first_chunk = saved_chunk_files[0]
             extracted_headers = self.extract_headers(first_chunk)
 
+            chunk_headers = self.extract_headers(chunk_file)
+
+            if chunk_headers:
+                logger.debug(f"Saved chunk {chunk_number}: {chunk.shape[0]} rows to {chunk_file}")
+
             if extracted_headers:  
 
                 logger.debug("Reference data processing completed.")
+                logger.debug("SKU dictionary prepared for processing.")
 
                 update_sheet_headers = self.process_update_sheet()
                 if update_sheet_headers:
@@ -79,10 +86,16 @@ class FileManager:
             df = pd.read_excel(file_path, header = None)
 
             headers = {}
-
             title_row_index = 0
 
             identified_columns = []
+
+            skus = df.iloc[title_row_index + 1:, 0].dropna().tolist()
+            self.sku_dict = {sku: [] for sku in skus}
+
+            for sku in skus:
+                if sku not in self.sku_dict:
+                    self.sku_dict[sku] = []
 
             for col_index in range(df.shape[1]):
                 title = df.iloc[title_row_index, col_index]
@@ -97,6 +110,7 @@ class FileManager:
                 headers[title] = column_data
 
             logger.debug(f"Columns identified: {', '.join(identified_columns)}")
+            logger.debug(f"Updated SKU dictionary.")
 
             return headers
             
