@@ -41,7 +41,6 @@ CONFIG = {
 
     # AI handler configuration
     "ai_handler_model": "gpt-4o-mini", 
-    "api_key": os.getenv("OPENAI_API_KEY"),
     "ai_handler_max_tokens": 1000,  # Adjust token limits as needed
     "enable_ai_handler": True,
     "ai_handler_temperature": 0.7,  
