@@ -1,21 +1,18 @@
-2024-12-19 21:40:12,946 - INFO - Starting directory processing...
-2024-12-19 21:40:12,946 - INFO - Processing reference data...
-2024-12-19 21:40:13,036 - DEBUG - Loaded reference data: 75 rows, 18 columns.
-2024-12-19 21:40:13,048 - DEBUG - Saved chunk 1: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk1.xlsx
-2024-12-19 21:40:13,057 - DEBUG - Saved chunk 2: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk2.xlsx
-2024-12-19 21:40:13,067 - DEBUG - Saved chunk 3: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk3.xlsx
-2024-12-19 21:40:13,076 - DEBUG - Saved chunk 4: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk4.xlsx
-2024-12-19 21:40:13,085 - DEBUG - Saved chunk 5: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk5.xlsx
-2024-12-19 21:40:13,093 - DEBUG - Saved chunk 6: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk6.xlsx
-2024-12-19 21:40:13,102 - DEBUG - Saved chunk 7: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk7.xlsx
-2024-12-19 21:40:13,110 - DEBUG - Saved chunk 8: to 5 rows to /workspaces/res-sapphire/assets/split_chunks/chunk8.xlsx
-2024-12-19 21:40:13,119 - DEBUG - Columns identified: 'SKU' (1), 'PRODUCT ID' (2), 'INV QTY' (3), 'PRICE' (4), 'WEIGHT (GRAM)' (5), 'PRODUCT TITLE' (6), 'PRODUCT DESCRIPTION' (7), 'IMAGE URL 1' (8), 'IMAGE URL 2' (9), 'IMAGE URL 3' (10), 'IMAGE URL 4' (11), 'COLOR' (12), 'SIZE' (13), 'SCRATCH 1' (14), 'SCRATCH 2' (15), 'SCRATCH 3' (16), 'SCRATCH 4' (17), 'SCRATCH 5' (18)
-2024-12-19 21:40:13,120 - DEBUG - Updated SKU dictionary.
-2024-12-19 21:40:13,128 - DEBUG - Columns identified: 'SKU' (1), 'PRODUCT ID' (2), 'INV QTY' (3), 'PRICE' (4), 'WEIGHT (GRAM)' (5), 'PRODUCT TITLE' (6), 'PRODUCT DESCRIPTION' (7), 'IMAGE URL 1' (8), 'IMAGE URL 2' (9), 'IMAGE URL 3' (10), 'IMAGE URL 4' (11), 'COLOR' (12), 'SIZE' (13), 'SCRATCH 1' (14), 'SCRATCH 2' (15), 'SCRATCH 3' (16), 'SCRATCH 4' (17), 'SCRATCH 5' (18)
-2024-12-19 21:40:13,128 - DEBUG - Updated SKU dictionary.
-2024-12-19 21:40:13,128 - DEBUG - Saved chunk 8: 5 rows to /workspaces/res-sapphire/assets/split_chunks/chunk8.xlsx
-2024-12-19 21:40:13,128 - DEBUG - Reference data processing completed.
-2024-12-19 21:40:13,128 - DEBUG - SKU dictionary prepared for processing.
-2024-12-19 21:40:13,175 - DEBUG - Sheets available in Update Template: Data Definitions, Hidden_product_content_and_sit, Product Content And Site Exp
-2024-12-19 21:40:13,238 - DEBUG - Update Sheet Columns identified: 'Attribute Name' (1), 'Definitions' (2), 'Product Type' (3), 'Example Values' (4), 'Min Characters' (5), 'Max Characters' (6), 'Min Number of Values' (7), 'Recommended Number of Values' (8)
-2024-12-19 21:40:21,767 - INFO - Skipping web scraping. Exiting.
+2024-12-19 21:59:39,732 - INFO - Starting directory processing...
+2024-12-19 21:59:39,732 - INFO - Processing reference data...
+2024-12-19 21:59:39,828 - DEBUG - Loaded reference data: 75 rows, 18 columns.
+2024-12-19 21:59:39,839 - DEBUG - Saved chunk 1: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk1.xlsx
+2024-12-19 21:59:39,849 - DEBUG - Saved chunk 2: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk2.xlsx
+2024-12-19 21:59:39,858 - DEBUG - Saved chunk 3: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk3.xlsx
+2024-12-19 21:59:39,867 - DEBUG - Saved chunk 4: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk4.xlsx
+2024-12-19 21:59:39,875 - DEBUG - Saved chunk 5: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk5.xlsx
+2024-12-19 21:59:39,884 - DEBUG - Saved chunk 6: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk6.xlsx
+2024-12-19 21:59:39,894 - DEBUG - Saved chunk 7: to 10 rows to /workspaces/res-sapphire/assets/split_chunks/chunk7.xlsx
+2024-12-19 21:59:39,901 - DEBUG - Saved chunk 8: to 5 rows to /workspaces/res-sapphire/assets/split_chunks/chunk8.xlsx
+2024-12-19 21:59:39,911 - DEBUG - Columns identified: 'SKU' (1), 'PRODUCT ID' (2), 'INV QTY' (3), 'PRICE' (4), 'WEIGHT (GRAM)' (5), 'PRODUCT TITLE' (6), 'PRODUCT DESCRIPTION' (7), 'IMAGE URL 1' (8), 'IMAGE URL 2' (9), 'IMAGE URL 3' (10), 'IMAGE URL 4' (11), 'COLOR' (12), 'SIZE' (13), 'SCRATCH 1' (14), 'SCRATCH 2' (15), 'SCRATCH 3' (16), 'SCRATCH 4' (17), 'SCRATCH 5' (18)
+2024-12-19 21:59:39,911 - DEBUG - Updated SKU dictionary.
+2024-12-19 21:59:39,911 - DEBUG - Reference data processing completed.
+2024-12-19 21:59:39,911 - DEBUG - SKU dictionary prepared for processing.
+2024-12-19 21:59:39,957 - DEBUG - Sheets available in Update Template: Data Definitions, Hidden_product_content_and_sit, Product Content And Site Exp
+2024-12-19 21:59:40,019 - DEBUG - Update Sheet Columns identified: 'Attribute Name' (1), 'Definitions' (2), 'Product Type' (3), 'Example Values' (4), 'Min Characters' (5), 'Max Characters' (6), 'Min Number of Values' (7), 'Recommended Number of Values' (8)
+2024-12-19 22:00:06,684 - INFO - Skipping web scraping. Exiting.
