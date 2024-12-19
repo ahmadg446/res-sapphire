@@ -34,7 +34,7 @@ class FileManager:
         total_chunks = (len(reference_data) + self.chunk_size -1) // self.chunk_size
         saved_chunk_files = []
         
-        
+        # process chunks
         for chunk_number, start_row in enumerate(range(0, len(reference_data), self.chunk_size), start = 1):
             chunk = reference_data.iloc[start_row:start_row + self.chunk_size]
             chunk_file = self.generate_chunk_filename(chunk_number)
@@ -42,25 +42,19 @@ class FileManager:
             saved_chunk_files.append(chunk_file)
             logger.debug(f"Saved chunk {chunk_number}: to {chunk.shape[0]} rows to {chunk_file}")
 
-        extracted_headers = {}
+        # process headers from first chunk
         if saved_chunk_files:
-            first_chunk = saved_chunk_files[0]
-            extracted_headers = self.extract_headers(first_chunk)
+            extracted_headers = self.extract_headers(saved_chunk_files[0])
 
-            chunk_headers = self.extract_headers(chunk_file)
-
-            if chunk_headers:
-                logger.debug(f"Saved chunk {chunk_number}: {chunk.shape[0]} rows to {chunk_file}")
-
-            if extracted_headers:  
-
+            if extracted_headers:
                 logger.debug("Reference data processing completed.")
                 logger.debug("SKU dictionary prepared for processing.")
 
+                # process update sheet
                 update_sheet_headers = self.process_update_sheet()
-                if update_sheet_headers:
-                    
+                if update_sheet_headers:     
                     return update_sheet_headers
+                    
             return extracted_headers
             
     def load_excel(self, file_path): # load excel file, select sheet w most rows
