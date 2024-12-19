@@ -47,17 +47,20 @@ class FileManager:
             extracted_headers = self.extract_headers(saved_chunk_files[0])
 
             if extracted_headers:
+                num_skus = len(self.sku_dict)
+                num_chunks = len(saved_chunk_files)
                 logger.debug("Reference data processing completed.")
-                logger.debug("SKU dictionary prepared for processing.")
+                logger.debug(f"SKU dictionary prepared for processing ({num_skus} SKUs, {num_chunks} chunks).")
 
                 # process update sheet
                 update_sheet_headers = self.process_update_sheet()
                 if update_sheet_headers:     
                     return update_sheet_headers
-                    
+
             return extracted_headers
             
-    def load_excel(self, file_path): # load excel file, select sheet w most rows
+    # excel file handling
+    def load_excel(self, file_path):
 
         try:
             workbook = pd.ExcelFile(file_path)
